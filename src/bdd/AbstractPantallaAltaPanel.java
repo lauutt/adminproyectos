@@ -26,10 +26,6 @@ public abstract class AbstractPantallaAltaPanel extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(camposPanel);
         this.add(botonesPanel);
-
-        //tomar valores de los campos
-
-        //escuchar evento del ok, mandar a grabar
         this.botonesPanel.getOkBtn().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,6 +50,8 @@ public abstract class AbstractPantallaAltaPanel extends JPanel {
     private void setBotoneraPanel() {
         this.botonesPanel = new BotoneraPanel(this.panelManager);
     }
+    
+
 
     public abstract void setCamposPanel();
     public abstract void ejecutarAccionOk() throws ServicioExcepcion;

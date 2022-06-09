@@ -6,6 +6,7 @@ import java.util.List;
 
 import bdd.Exceptions.DBException;
 import entidades.Empleado;
+import entidades.Proyecto;
 
 
 public class UsuarioDAOH2Impl implements UsuarioDAO {
@@ -55,6 +56,13 @@ public class UsuarioDAOH2Impl implements UsuarioDAO {
 		return resultado;
 	}
 
+	public void crearProyecto(Proyecto unProyecto) throws DBException  {
+		String titulo = unProyecto.getTitulo();
+		String descripcion = unProyecto.getDescripcion();
+		String sql = "INSERT INTO proyecto (titulo, descripcion) VALUES "
+				+ "('" + titulo + "','" + descripcion + "')"; 
+		DBAccess.executeUpdate(sql);
+	}
 
 
 

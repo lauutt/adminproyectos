@@ -7,60 +7,85 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import bdd.Exceptions.ServicioExcepcion;
+
 public class BarraMenu extends JMenuBar {
 
-	private PanelManager manejador;
+	private PanelManager panelManager;
 	
 	public BarraMenu() {
 	}
 	
-	public void setManejador(PanelManager manejador) {
-		this.manejador = manejador;
+	public void setManejador(PanelManager panelManager) {
+		this.panelManager = panelManager;
 	}
 	
 	public void armarBarra() {
-		JMenu archivo = new JMenu("Archivo");
-		JMenu anidado = new JMenu("Anidado");
 		
+		JMenu archivo = new JMenu("Archivo");
+		JMenu crear = new JMenu("Crear");
+		JMenu panelesListas = new JMenu("Ver");
 		JMenuItem salir = new JMenuItem("Salir");
+
+		
+		JMenuItem crearEmpleado = new JMenuItem("Nuevo Empleado");
+		crearEmpleado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelManager.mostrarPantallaAltaEmpleadoPanel();
+			}
+		});
+		crear.add(crearEmpleado);
+		
+		
+		JMenuItem crearProyecto = new JMenuItem("Nuevo Proyecto");
+		crearProyecto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelManager.mostrarAltaProyectoPanel();	
+			}
+		});
+		crear.add(crearProyecto);
+		
+		
+		JMenuItem crearTarea = new JMenuItem("Nueva Tarea");
+		//TODO
+		crear.add(crearTarea);
+		
 		salir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				manejador.mostrarSalir();
+				panelManager.mostrarSalir();
 			}
 		});
-		
 		archivo.add(salir);
 		
-		JMenu paneles = new JMenu("Paneles");
 		
-		JMenuItem mostrarUnPanel = new JMenuItem("Mostrar Panel Uno");
-		mostrarUnPanel.addActionListener(new ActionListener() {
+		JMenuItem verPanelListaEmpleados = new JMenuItem("Empleados");
+		verPanelListaEmpleados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				manejador.mostrarInicioPanel();
+				try {
+					panelManager.mostrarTablaEmpleadosPanel();
+				} catch (ServicioExcepcion e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
+		panelesListas.add(verPanelListaEmpleados);
 		
-		paneles.add(mostrarUnPanel);
 		
-		JMenuItem mostrarOtroPanel = new JMenuItem("Mostrar Otro Panel");
-		mostrarOtroPanel.addActionListener(new ActionListener() {
+		
+		JMenuItem verPanelListaProyectos = new JMenuItem("Proyectos");
+		verPanelListaProyectos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				manejador.mostrarPantallaAltaEmpleadoPanel();
+				panelManager.mostrarPantallaAltaEmpleadoPanel();
 			}
 		});
-		paneles.add(mostrarOtroPanel);
+		panelesListas.add(verPanelListaProyectos);
 
-		JMenu interno = new JMenu("interno1");
-		JMenuItem opcion =  new JMenuItem("opcion");
-		interno.add(opcion);
-		anidado.add(interno);
-
-
+		
 
 		this.add(archivo);
-		this.add(anidado);
-		add(paneles);
+		this.add(crear);
+		add(panelesListas);
 		
 	}
 

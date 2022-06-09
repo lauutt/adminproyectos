@@ -20,6 +20,8 @@ public class BotoneraPanel extends JPanel {
 		okBtn = new JButton("OK");
 		cancelBtn = new JButton("Borrar todo");
 		volverBtn = new JButton("Volver");
+		
+		
 
 		this.add(okBtn);
 		this.add(cancelBtn);
@@ -57,5 +59,13 @@ public class BotoneraPanel extends JPanel {
 
 	public void setVolverBtn(JButton volverBtn) {
 		this.volverBtn = volverBtn;
+	}
+	
+	public void renameOkBtn(String text) {
+		okBtn.setText(text);
+	}
+	
+	public void renameCancelBtn(String text) {
+		cancelBtn.setText(text);
 	}
 }

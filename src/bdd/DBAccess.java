@@ -61,7 +61,6 @@ public class DBAccess {
 				String contactoEmpleado = rs.getString("contacto");
 				Integer costoHoraEmpleado = rs.getInt("costoHora");
 				Empleado em = new Empleado(id, nombresEmpleado, apellidosEmpleado, contactoEmpleado, costoHoraEmpleado);
-				System.out.println(em);
 				resultado.add(em);
 			}
 		} catch (SQLException e) {

@@ -1,4 +1,6 @@
 package bdd;
+import java.util.List;
+
 import bdd.Exceptions.*;
 import entidades.Empleado;
 
@@ -12,8 +14,5 @@ public class Servicios {
 			throw new CrearUsuarioExcepcion("No se pudo crear el usuario", e1);		
 		} 
 	}
-	
-	
-	
 
 }

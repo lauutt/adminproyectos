@@ -1,6 +1,7 @@
 package bdd;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import bdd.Exceptions.ServicioExcepcion;
 import entidades.Empleado;
@@ -9,19 +10,32 @@ import entidades.Empleado;
 public class PanelManager {
 	
 	private JFrame frame;
+	private BarraMenu barraMenu;
 	private PantallaInicioPanel pantallaInicioPanel;
 	private PantallaAltaEmpleadoPanel pantallaAltaEmpleadoPanel;
-	private TablaEmpleadosPanel tablaEmpleadosPanel;
+	private PantallaTablaEmpleadosPanel pantallaTablaEmpleadosPanel;
+	private PantallaAltaProyectoPanel pantallaAltaProyectoPanel;
+	private PantallaEditarEmpleadoPanel pantallaEditarEmpleadoPanel;
 
 	public PanelManager() {
 	}
 
 	public void armarManager() throws ServicioExcepcion {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 500, 500);
+		frame.setBounds(100, 100, 500, 550);
+		this.barraMenu = new BarraMenu();
+		this.barraMenu.armarBarra();
+		this.barraMenu.setManejador(this);
+		frame.setJMenuBar(barraMenu);
+		frame.setTitle("Administrador de Proyectos");
 		pantallaInicioPanel = new PantallaInicioPanel(this);	
 		pantallaAltaEmpleadoPanel = new PantallaAltaEmpleadoPanel(this);
-		tablaEmpleadosPanel = new TablaEmpleadosPanel(this);
+		pantallaAltaProyectoPanel = new PantallaAltaProyectoPanel(this);
+		pantallaEditarEmpleadoPanel = new PantallaEditarEmpleadoPanel(this);
+		pantallaTablaEmpleadosPanel = new PantallaTablaEmpleadosPanel(this);
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		
 	}
 
@@ -30,36 +44,41 @@ public class PanelManager {
 	}
 
 	public void mostrarSalir() {
-		int response = JOptionPane.showConfirmDialog(frame, "Esta seguro?");
+		int response = JOptionPane.showConfirmDialog(frame, "¿Desea salir del programa?");
 		if (response == JOptionPane.OK_OPTION) {
 			System.exit(0);
 		}
 	}
 
-
-
 	public void mostrarPantallaAltaEmpleadoPanel() {
-		frame.getContentPane().removeAll();
-		frame.getContentPane().add(pantallaAltaEmpleadoPanel);
-		frame.getContentPane().validate();//RE-dispongo los elementos segun el layout
-		frame.getContentPane().repaint();//RE-pinto los elementos dispuestos en el paso anterior
+		mostrarPanel(pantallaAltaEmpleadoPanel);
 	}
 
-
-
 	public void mostrarInicioPanel() {
-		frame.getContentPane().removeAll();
-		frame.getContentPane().add(pantallaInicioPanel);
-		frame.getContentPane().validate();//RE-dispongo los elementos segun el layout
-		frame.getContentPane().repaint();
+		mostrarPanel(pantallaInicioPanel);
 		
 	}
 	
-	public void mostrarTablaEmpleadosPanel() {
+	public void mostrarTablaEmpleadosPanel() throws ServicioExcepcion {
+		mostrarPanel(pantallaTablaEmpleadosPanel);
+		pantallaTablaEmpleadosPanel.updateTable();
+		System.out.println("Hola");
+	}
+
+	public void mostrarAltaProyectoPanel() {
+		mostrarPanel(pantallaAltaProyectoPanel);
+	}
+	
+	public void mostrarEditarEmpleadoPanel(Empleado e) {
+		pantallaEditarEmpleadoPanel.getEditable(e);
+		mostrarPanel(pantallaEditarEmpleadoPanel);
+	}
+	
+	public void mostrarPanel(JPanel jPanel) {
 		frame.getContentPane().removeAll();
-		frame.getContentPane().add(tablaEmpleadosPanel);
-		frame.getContentPane().validate();//RE-dispongo los elementos segun el layout
-		frame.getContentPane().repaint();
+		frame.getContentPane().add(jPanel);
+		frame.getContentPane().validate();
+		frame.getContentPane().repaint();	
 	}
 	
 
